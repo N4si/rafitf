@@ -14,7 +14,7 @@ module "vpc" {
   azs            = ["us-east-1a", "us-east-1b"]  # Replace with your desired AZs
 }
 
-module "security" {
+module "security_group" {
   source = "./modules/security_group"
   vpc_id = module.vpc.vpc_id # Assuming you have a VPC module
 }
@@ -23,6 +23,6 @@ module "ec2_instance" {
   source            = "./modules/ec2"
   ami_id            = "ami-0c55b159cbfafe1f0" # Replace with your AMI ID
   instance_type     = "t2.micro"
-  subnet_id         = module.vpc.private_subnets[0]
+  subnet_id         = module.vpc.public_subnet_ids[0]
   security_group_id = module.security_group.security_group_id
 }
